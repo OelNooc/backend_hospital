@@ -57,4 +57,15 @@ const searchPacientes = async (req, res) => {
     }
 };
 
-module.exports = { getPacientes, createPaciente, updatePaciente, deletePaciente, searchPacientes };
+const getPacienteByID = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const paciente = await Paciente.findById(id);
+        if (!paciente) return res.status(404).json({ message: "Paciente no encontrado" });
+        res.json(paciente);
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener el detalle del paciente" });
+    }
+};
+
+module.exports = { getPacientes, createPaciente, updatePaciente, deletePaciente, searchPacientes, getPacienteByID };
